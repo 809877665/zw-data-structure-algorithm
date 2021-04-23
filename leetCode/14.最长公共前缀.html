@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    编写一个函数来查找字符串数组中的最长公共前缀。
+    如果不存在公共前缀，返回空字符串 ""。
+
+    示例 1：
+    输入：strs = ["flower","flow","flight"]
+    输出："fl"
+    示例 2：
+    输入：strs = ["dog","racecar","car"]
+    输出：""
+    解释：输入不存在公共前缀。
+   -->
+   <script>
+    var longestCommonPrefix = function(strs) {
+      // 空数组或数组中包含空字符串元素时
+      if(strs.length===0 || strs.includes('')) {
+        return ''
+      }
+      let res = ''    // 返回的结果
+      let s = strs[0][0]    //取第一个元素的第一个字符和其他元素比较
+
+      for(let i=1;i<=strs[0].length;i++) {
+        // 判断剩下的数组元素中，是否均以该字符串开头
+        let flag = isStartByStr(strs, s);
+        if(flag) {
+          res = s;
+          let char = strs[0].charAt(i)
+          s += char
+        } else {
+          break;
+        }
+      }
+      return res;  
+    };
+
+    // 判断该数组中剩下的元素是否均以指定的字符串开头
+    var isStartByStr = function(arr, str) {
+      let flag = true
+      for(let i = 1;i<arr.length;i++) {
+        if(arr[i].search(str) !==0){
+          flag = false
+          break;
+        }
+      }
+      return flag
+    }
+
+
+    console.log(longestCommonPrefix(["flower","flow","flight"]));
+    console.log(longestCommonPrefix(["dog","racecar","car"]));
+    console.log(longestCommonPrefix([]));
+    console.log(longestCommonPrefix(['']));
+    console.log(longestCommonPrefix(["flower","flower","flower","flower"]));
+
+   </script>
+</body>
+</html>

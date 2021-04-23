@@ -1,0 +1,82 @@
+<!--
+ * @Description: 
+ * @Author: zhangwen
+ * @Date: 2020-09-30
+ * @LastEditors: zhangwen
+ * @LastEditTime: 2020-09-30
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var CQueue = function () {
+      this.stack1 = [];
+      this.stack2 = [];
+    };
+
+    /** 
+     * @param {number} value
+     * @return {void}
+     */
+    CQueue.prototype.appendTail = function (value) {
+      if (this.stack1.length == 0) {
+        this.stack1.push(value)
+      } else {
+        let cur = '';
+        while (this.stack1.length !== 0) {
+          cur = this.stack1.pop();
+          this.stack2.push(cur);
+        }
+        this.stack2.push(value);
+        while (this.stack2.length !== 0) {
+          cur = this.stack2.shift();
+          this.stack1.push(cur);
+        }
+      }
+
+    };
+
+    /**
+     * @return {number}
+     */
+    CQueue.prototype.deleteHead = function () {
+      if (this.stack1.length == 0) {
+        return -1;
+      }
+      debugger
+      let cur = null;
+      while (this.stack1.length !== 0) {
+        cur = this.stack1.pop();
+        this.stack2.push(cur);
+      }
+      let res = this.stack2.pop();
+      while (this.stack2.length !== 0) {
+        cur = this.stack2.pop();
+        this.stack1.push(cur);
+      }
+      return res;
+    };
+
+    var queue = new CQueue();
+    console.log(queue.deleteHead());
+    
+    queue.appendTail(5)
+    queue.appendTail(2)
+    console.log(queue.deleteHead());
+
+    console.log(queue.deleteHead());
+
+
+ 
+  </script>
+</body>
+
+</html>

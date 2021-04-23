@@ -1,0 +1,87 @@
+<!--
+ * @Description: 
+ * @Author: zhangwen
+ * @Date: 2020-09-28
+ * @LastEditors: zhangwen
+ * @LastEditTime: 2020-09-28
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var findKthLargest = function (nums, k) {
+      console.log('初始', nums);
+
+      // nums.sort(function(a,b){
+      //   return a-b;
+      // })
+      // nums.reverse();
+      // nums.sort(function(a,b){
+      //   return b-a;   //降序排列
+      // })
+      nums = quickSort(nums).reverse();
+      console.log('排序后', nums);
+      return nums[k - 1];
+    };
+
+    function quickSort(arr) {
+      return quick(arr, 0, arr.length - 1);
+    }
+
+    function quick(array, start, end) {
+      if (start < end) {
+        let mid = partion(array, start, end);
+        quick(array, start, mid - 1);
+        quick(array, mid + 1, end);
+      }
+      return array;
+    }
+
+    function exchange(array, i, j) {
+      let temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+
+    function partion(array, start, end) {
+      debugger
+      const pivot = array[start];
+      let i = start;
+      let j = end;
+      while (i < j) {
+        while (i < j && array[j] > pivot) {
+          j--;
+        }
+        if (i < j && array[j] <= pivot) {
+          exchange(array, i, j);
+          i++
+        }
+        while (i < j && array[i] < pivot) {
+          i++;
+        }
+        if (i < j && array[i] >= pivot) {
+          exchange(array, i, j);
+          j--;
+        }
+
+        if (i == j) {
+          array[i] = pivot;
+        }
+      }
+      return i;
+    }
+
+    console.log(findKthLargest([3, 2, 3, 1, 2, 4, 5, 5, 6, 7, 7, 8, 2, 3, 1, 1, 1, 10, 11, 5, 6, 2, 4, 7, 8, 5, 6], 2));
+    // console.log(findKthLargest([3, 5, 1, 6, 4, 7, 2], 2));
+  </script>
+</body>
+
+</html>

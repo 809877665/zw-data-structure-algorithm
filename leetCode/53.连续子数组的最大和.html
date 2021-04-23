@@ -1,0 +1,93 @@
+<!--
+ * @Description: 
+ * @Author: zhangwen
+ * @Date: 2020-07-31
+ * @LastEditors: zhangwen
+ * @LastEditTime: 2020-09-28
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 
+    题目：
+        给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+        输入: [-2,1,-3,4,-1,2,1,-5,4]
+        输出: 6
+        解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。
+
+    解决方案：
+        分析： 求最大和那么当算出的sum<0时，就应该抛弃掉前面的连续子数组，从下一个下标开始寻找新的连续子数组；
+        注意： 需要先改变maxSum的值以后再更新sum的值
+   -->
+  /***/
+  <script>
+    // 要求时间复杂度为O(n)。
+    // https://leetcode-cn.com/problems/lian-xu-zi-shu-zu-de-zui-da-he-lcof/solution/wu-chong-jie-fa-san-chong-yu-yan-java-javascript-p/
+
+    // 暴力破解法 
+        var maxSubArray = function (nums) {
+          let max = 0;
+          let len = nums.length;
+          let sum = nums[0];
+          for (let i = 0; i < len; i++) {
+              sum = 0;
+              for (let j = i; j < len; j++) {
+                  sum += nums[j];
+                  if (sum > max) {
+                      max = sum;
+                  }
+              }
+          }
+          return max;
+      };
+
+    // 只循环一次，当sum=0时，至为0；
+    var maxSubArray2 = function (nums) {
+      let genSum = 0;
+      let maxSum = nums[0];
+      for (let i = 0; i < nums.length; i++) {
+        genSum += nums[i];
+        maxSum = genSum > maxSum ? genSum : maxSum;
+        if(genSum<0) {
+          genSum = 0;
+        }
+      }
+      return maxSum;
+    }
+
+    //例如输入的数组为{1，-2，3，10，-4，7，2，-5}和最大的子数组为{3，10，-4，7，2}
+    // public static void main(String[] args) {
+    // int[] arr={1,-2,3,10,-4,7,2,-5};
+    // System.out.println(findGreatestSum(arr));
+    // }
+    // public static int findGreatestSum(int[] arr){
+    // //定义最大子数组的和为greateSum
+    // int greateSum=0;
+    // //定义子数组的和为geneSum
+    // int geneSum=0;
+    // for (int i = 0; i < arr.length; i++) {
+    // if(geneSum<0){
+    // geneSum=arr[i];
+    // }else {
+    // geneSum+=arr[i];
+    // }
+    // if(geneSum>greateSum)
+    // greateSum=geneSum;
+    // }
+    // return greateSum;
+    // }
+
+    console.log(maxSubArray([-2, 1, -3, 4, -1, 2, 1, -5, 4]));
+    console.log(maxSubArray2([-2, 1, -3, 4, -1, 2, 1, -5, 4]));
+  </script>
+</body>
+
+</html>

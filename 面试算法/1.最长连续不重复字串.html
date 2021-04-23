@@ -1,0 +1,44 @@
+<!--
+ * @Description: 
+ * @Author: zhangwen
+ * @Date: 2020-09-24
+ * @LastEditors: zhangwen
+ * @LastEditTime: 2020-09-24
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 求一个字符串中的最长连续不包含重复字符的字串长度
+    var lengthOfLongestSubstring = function (s) {
+      let len = s.length;
+      let str = ''; //存放子串
+      let max = 0; //最长连续不重复字串的长度
+      for (let i = 0; i < len; i++) {
+        let char = s.charAt(i);
+        let index = str.indexOf(char);
+        if (index === -1) {
+          // 不含该子串
+          str += char;
+          max = str.length > max ? str.length : max;
+        } else {
+          // 含有该字串，则从该字符的下一个字符开始继续查找
+          str = str.substr(index + 1) + char;
+        }
+      }
+      return max;
+    };
+
+    console.log(lengthOfLongestSubstring('pwwkew'))
+  </script>
+</body>
+
+</html>

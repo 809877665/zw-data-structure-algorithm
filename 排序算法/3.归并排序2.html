@@ -1,0 +1,47 @@
+<!--
+ * @Description: 
+ * @Author: zhangwen
+ * @Date: 2020-09-07
+ * @LastEditors: zhangwen
+ * @LastEditTime: 2020-09-07
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function mergeSort(array) {
+      if(array.length>1) {
+        const {length} = array;
+        const mid = Math.floor(length/2);
+        const left = mergeSort(array.slice(0, mid));
+        const right = mergeSort(array.slice(mid, length));
+        array = merge(left,right) 
+      } 
+      return array;
+    }
+    /*
+    @params:  left: 左侧的数组；right: 右侧的数组
+    @return: 合并和排序小数组，返回大数组，直到回到原始数组并已排序完成 
+    */
+    function merge(left ,right) {
+      let i= 0;
+      let j= 0;
+      let result = [];
+      while(i < left.length && j<right.length) {
+          result.push(left[i] < right[j] ? left[i++] : right[j++]);
+      }
+      return result.concat(i<left.length ? left.slice(i) : right.slice(j));
+    }
+
+    // console.log(mergeSort([11,21,23,13,24,25,24]));
+    console.log(mergeSort([8,7,6,5,4,3,2,1]));
+    
+  </script>
+</body>
+</html>

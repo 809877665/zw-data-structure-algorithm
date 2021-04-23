@@ -1,0 +1,87 @@
+<!--
+ * @Description: 
+ * @Author: zhangwen
+ * @Date: 2020-09-30
+ * @LastEditors: zhangwen
+ * @LastEditTime: 2020-09-30
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /**
+     * Initialize your data structure here.
+     */
+    var MyQueue = function () {
+      this.list1 = [];
+      this.list2 = [];
+    };
+
+    /**
+     * Push element x to the back of queue. 
+     * @param {number} x
+     * @return {void}
+     */
+    MyQueue.prototype.push = function (x) {
+      this.list1.push(x);
+    };
+
+    /**
+     * Removes the element from in front of queue and returns that element.
+     * 删除队列的第一个元素，并返回删除的元素
+     * @return {number}
+     */
+    MyQueue.prototype.pop = function () {
+      if (this.empty()) return;
+      let cur = null;
+      while (this.list1.length > 0) {
+        cur = this.list1.pop();
+        this.list2.push(cur);
+      }
+      let res = this.list2.pop();
+      while (this.list2.length > 0) {
+        cur = this.list2.pop();
+        this.list1.push(cur);
+      }
+      return res;
+    };
+
+    /**
+     * Get the front element.
+     * @return {number}
+     */
+    MyQueue.prototype.peek = function () {
+      if (this.empty()) {
+        return;
+      }
+      return this.list1[0];
+    };
+
+    /**
+     * Returns whether the queue is empty.
+     * @return {boolean}
+     */
+    MyQueue.prototype.empty = function () {
+      return this.list1.length > 0 ? false : true;
+    };
+
+     var obj = new MyQueue()
+     obj.push(1)
+     obj.push(2)
+     console.log(obj.peek());
+     console.log(obj.pop());
+     console.log(obj.empty());
+     
+     
+  </script>
+</body>
+
+</html>

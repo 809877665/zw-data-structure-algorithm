@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var MyCircularDeque = function (k) {
+      this.size = k; //队列的大小
+      this.count = 0; //记录添加队尾时的的元素下标
+      this.lowestCount = 0; //记录当前队列的第一个元素
+      this.items = {};    //存放队列元素
+    };
+
+    /**
+     * @param {number} value 在队列首部添加元素
+     * @return {boolean}
+     */
+    MyCircularDeque.prototype.insertFront = function (value) {
+      if (this.isFull()) {
+        return false;
+      }
+      if (this.isEmpty()) {
+        this.items[this.count] = value;
+        this.count++;
+        return true;
+      } else if (this.lowestCount > 0) {
+        // 有删除过元素, 说明队列的前部分有空位
+        this.lowestCount--;
+        this.items[this.lowestCount] = value;
+        return true;
+      } else {
+        // this.lowestCount=0的情况，刚刚初始化好的队列
+        let len = this.count;
+        // 将现有队列的元素均往后移动一位，空出第一个元素的位置
+        for (let i = len; i > 0; i--) {
+          this.items[i] = this.items[i - 1];
+        }
+        this.items[0] = value;
+        this.count++;
+        return true;
+      }
+    };
+
+    /**
+     * @param {number} value在队尾添加元素
+     * @return {boolean}
+     */
+    MyCircularDeque.prototype.insertLast = function (value) {
+      if (this.isFull()) {
+        return false;
+      }
+      this.items[this.count] = value;
+      this.count++;
+      return true;
+    };
+
+    /**
+     * @return {boolean}删除队首的元素
+     */
+    MyCircularDeque.prototype.deleteFront = function () {
+      if (this.isEmpty()) {
+        return false;
+      }
+      let res = delete this.items[this.lowestCount];
+      this.lowestCount++;
+      return res;
+    };
+
+    /**
+     * @return {boolean}删除队尾的元素
+     */
+    MyCircularDeque.prototype.deleteLast = function () {
+      if (this.isEmpty()) {
+        return false;
+      }
+      this.count--;
+      return delete this.items[this.count];
+    };
+
+    /**
+     * @return {number}队首元素
+     */
+    MyCircularDeque.prototype.getFront = function () {
+      if (this.isEmpty()) {
+        return -1;
+      }
+      return this.items[this.lowestCount];
+    };
+
+    /**
+     * @return {number}队尾元素
+     */
+    MyCircularDeque.prototype.getRear = function () {
+      if (this.isEmpty()) {
+        return -1;
+      }
+      return this.items[this.count - 1];
+    };
+
+    /**
+     * @return 判断当前队列是否为空；
+     */
+    MyCircularDeque.prototype.isEmpty = function () {
+      return this.count - this.lowestCount === 0;
+    };
+
+    /**
+     * @return：判断队列是否满了
+     */
+    MyCircularDeque.prototype.isFull = function () {
+      return this.count - this.lowestCount === this.size;
+    };
+
+    var obj = new MyCircularDeque(3);
+    console.log(obj.insertFront(8));
+    console.log(obj.insertLast(8));
+    console.log(obj.insertLast(2));
+    console.log(obj.deleteLast());
+    console.log(obj.insertFront(9));
+    console.log(obj.deleteFront(9));
+    console.log(obj.insertLast(2));
+  </script>
+</body>
+
+</html>

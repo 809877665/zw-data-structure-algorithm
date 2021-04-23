@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串 s ，判断字符串是否有效。
+    有效字符串需满足：
+              左括号必须用相同类型的右括号闭合。
+              左括号必须以正确的顺序闭合。
+    示例 1：
+          输入：s = "()"
+          输出：true
+    示例 2：
+        输入：s = "()[]{}"
+        输出：true
+   -->
+   <script>
+    //  用数组方式实现栈的结构
+    class Stack {
+      constructor(items) {
+        this.items = items
+      }
+      // 取出栈顶元素
+      getStackTop() {
+        return this.items[this.items.length-1]
+      }
+      // 判断是否为空栈
+      isEmpty() {
+        return this.items.length === 0
+      }
+      // 向栈顶添加元素
+      addStackTop(item) {
+        return this.items.push(item)
+      }
+      // 删除栈顶元素
+      popStackTop() {
+        return this.items.pop()
+      }
+    }
+
+    var isValid = function(s) {
+      let stack = new Stack([]);
+      for(let i=0;i<s.length;i++) {
+        let char = s.charAt(i)
+        if(char == '(' || char == '{' || char=='[') {
+          stack.addStackTop(char)
+        }else {
+          if(stack.isEmpty()) {
+            return false
+          }else {
+            // 取出此时栈顶元素和即将加入的元素做对比，如果能匹配上就将栈顶的元素出栈；否则返回false
+            if((char==')' && stack.getStackTop()=='(') 
+              || (char=='}' && stack.getStackTop()=='{') 
+              || (char==']' && stack.getStackTop()==='[')){
+              stack.popStackTop();
+            }else {
+              return false
+            }
+          }
+        }
+      }
+      // 左后判断栈是否为空，为空的话就说明全都匹配上,返回true；否则返回false
+      return stack.isEmpty()
+    };
+
+    // console.log(isValid("()[]{}"))
+    // console.log(isValid("()"))
+    console.log(isValid("}"))
+
+   </script>
+</body>
+</html>

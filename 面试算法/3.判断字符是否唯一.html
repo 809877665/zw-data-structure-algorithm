@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+    <!-- 
+      实现一个算法，确定一个字符串 s 的所有字符是否全都不同。
+      示例 1：
+      输入: s = "leetcode"
+      输出: false 
+      示例 2：
+
+      输入: s = "abc"
+      输出: true
+    -->
+  <script>
+      var isUnique = function(astr) {
+        let map = new Map();
+        for(let i=0;i<astr.length;i++) {
+          let char = astr[i]
+          if(map.has(char)) {
+            map.set(char, map.get(char)+1)
+          }else {
+            map.set(char, 1)
+          }
+        }
+        return !Array.from(map.values()).find(ele=>ele>1)
+      }; 
+
+      // console.log(isUnique('leetcode'));
+      // console.log(isUnique('abc'));
+
+      var isUnique2 = function(astr) {
+        let res = true;
+        for(let i=0;i<astr.length-1;i++) {
+          for(let j=i+1;j<astr.length;j++) {
+            let char1 = astr.charAt(i)
+            let char2 = astr.charAt(j)
+            if(char1===char2) {
+              res = false
+              break;
+            }
+          }
+        }
+        return res
+      }; 
+
+      console.log(isUnique2('leetcode'));
+      console.log(isUnique2('abc'));
+
+
+  </script>
+</body>
+</html>

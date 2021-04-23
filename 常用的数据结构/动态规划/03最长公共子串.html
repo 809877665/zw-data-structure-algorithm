@@ -1,0 +1,58 @@
+<!--
+ * @Description: 
+ * @Author: zhangwen
+ * @Date: 2020-09-18
+ * @LastEditors: zhangwen
+ * @LastEditTime: 2020-09-18
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    /**
+      最长公共字串：出现顺序相同且连续
+      如：输入'abcdxyz','xyzabcd'
+         输出：4即最长公共字串为abcd
+    */
+    function getStr(s1, s2) {
+      let m = s1.length;
+      let n = s2.length;
+      let arr = [];
+      for (let i = 0; i <= m; i++) {
+        arr[i] = new Array(n + 1).fill(0);
+      }
+      for (let i = 1; i <= m; i++) {
+        let a = s1[i - 1];
+        for (let j = 1; j <= n; j++) {
+          let b = s2[j - 1];
+          if (a === b) {
+            arr[i][j] = arr[i - 1][j - 1] + 1;
+          }
+        }
+      }
+      console.log(arr);
+      return getMax(arr);
+    }
+
+    function getMax(arr) {
+      let temp = [];
+      for(let i=0; i<arr.length; i++) {
+        temp.push(Math.max(...arr[i]));
+      }
+      return Math.max(...temp);
+    }
+    console.log(getStr('abcdxyz', 'xyzabcd'));
+    
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,103 @@
+<!--
+ * @Description: 
+ * @Author: zhangwen
+ * @Date: 2020-09-21
+ * @LastEditors: zhangwen
+ * @LastEditTime: 2020-09-21
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <span>111</span>
+  <div>444</div>
+
+  <p>222</p>
+  <div>444</div>
+  <span>111</span>
+  <span>111</span>
+
+  <script>
+    /**
+     * 除了toString方法，其他方法的复杂度均为O(1)
+     */
+    class Stack {
+      constructor() {
+        this.count = 0;
+        this.items = {}; //用来保存栈里面的元素
+      }
+      // 向栈里面添加元素
+      push(element) {
+        this.items[this.count] = element;
+        this.count++;
+      }
+      // 从栈顶删除元素
+      pop() {
+        this.count--;
+        let value = this.items[this.count];
+        delete this.items[this.count];
+        return value;
+      }
+      // 判断栈是否为空
+      isEmpty() {
+        return this.count === 0;
+      }
+      // 返回栈顶的元素
+      peek() {
+        if (this.isEmpty()) {
+          return undefined;
+        }
+        this.count--;
+        return this.items[this.count];
+      }
+
+      // toString方法,  从栈顶打印元素
+      toString() {
+        if (this.isEmpty()) {
+          return '';
+        }
+        let objStr = '';
+        for (let i = this.count-1; i >=0; i--) {
+          objStr = `${objStr}, ${this.items[i]}`;
+        }
+        return objStr.substr(1);
+      }
+    }
+
+    /**
+     * @name: 
+     * @param: decNum: 要转的十进制数值； base:要转的进制数[2,36] 
+     * @return {type} 
+     */
+    function baseCovert(decNum, base) {
+      let stack = new Stack();
+      const digits = '0123456789abcdefghijklmnopqrstuvwxyz'
+      let number=decNum;
+      let rem;
+      // 得到的商不为0
+      while(number>0) {
+        rem = Math.floor(number % base);  //获取余数
+        stack.push(rem);
+        number = Math.floor(number / base); //第一次除以进制数后得到的结果
+      }
+      let result = '';
+      while(!stack.isEmpty()) {
+        result += digits[stack.pop()];
+      }
+      return result;
+
+    }
+    console.log(baseCovert(26,16));
+    console.log(baseCovert(-1,16));
+    
+  </script>
+</body>
+
+</html>

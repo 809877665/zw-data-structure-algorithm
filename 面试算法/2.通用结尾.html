@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    【编程题】写一个函数来实现如下要求 写一个函数，来获取字符串数组中的通用结尾。 如果不存在通用的结尾，返回空字符串 ""。 示例 1: 输入: ["owner","flower","fighter"] 输出: "er结尾" 示例 2: 输入: ["dog","racecar","car"] 输出: "没有通用结尾"
+      ['abcder','edwder','hljkder'] //输出der ['abc','def','hgk'] //输入''
+  -->
+   <script>
+      function getEndStr(arr) {
+          let s = '';
+          let str = arr[0].charAt(arr[0].length-1);   //默认为第一个元素的最后一个字符
+          for(let i=1;i<arr[0].length;i++) {
+              let isFlag = this.getIsDiff(arr,str);
+              if(isFlag) {
+                  s = str;
+                  str = arr[0].charAt(arr[0].length-(i+1))+str;
+              }else {
+                  break;
+              }
+          }
+        return s.length>0 ? `${s}结尾` : '没有通用结尾'; 
+      }
+
+      // 判断是否存在一个元素的后缀不一致
+      function getIsDiff(arr,str) {
+        let len = str.length;
+        let isFlag = true;
+        for(let i=1;i<arr.length;i++) {
+          let ele = arr[i];
+          let len = str.length;   //对比的字符串
+          let sTemp = ele.substring(ele.length-len);
+          if(sTemp != str) {
+            isFlag = false;
+            break;
+          }
+        }
+        return isFlag;
+      }
+      
+      let arr = ['abcderb','edwderb','hljkderb'];
+      console.log(getEndStr(arr));
+   </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!--
+ * @Description: 
+ * @Author: zhangwen
+ * @Date: 2020-09-30
+ * @LastEditors: zhangwen
+ * @LastEditTime: 2020-09-30
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /**
+     * Initialize your data structure here.
+     */
+    var MyQueue = function () {
+      this.count = 0;
+      this.fontIndex = 0;
+      this.items = {};
+    };
+
+    /**
+     * Push element x to the back of queue. 
+     * @param {number} x
+     * @return {void}
+     */
+    MyQueue.prototype.push = function (x) {
+      this.items[this.count] = x;
+      this.count++;
+    };
+
+    /**
+     * Removes the element from in front of queue and returns that element.
+     * 删除队列的第一个元素，并返回删除的元素
+     * @return {number}
+     */
+    MyQueue.prototype.pop = function () {
+      let res = this.items[this.fontIndex];
+      delete this.items[this.fontIndex];
+      this.fontIndex++;
+      return res;
+    };
+
+    /**
+     * Get the front element.
+     * @return {number}
+     */
+    MyQueue.prototype.peek = function () {
+      return this.items[this.fontIndex];
+    };
+
+    /**
+     * Returns whether the queue is empty.
+     * @return {boolean}
+     */
+    MyQueue.prototype.empty = function () {
+      return this.count === this.fontIndex;
+    };
+
+     var obj = new MyQueue()
+     obj.push(1)
+     obj.push(2)
+     console.log(obj.peek());
+     console.log(obj.pop());
+     console.log(obj.empty());
+  </script>
+</body>
+
+</html>

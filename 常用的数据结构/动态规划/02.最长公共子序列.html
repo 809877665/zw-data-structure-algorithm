@@ -1,0 +1,52 @@
+<!--
+ * @Description: 
+ * @Author: zhangwen
+ * @Date: 2020-09-18
+ * @LastEditors: zhangwen
+ * @LastEditTime: 2020-09-18
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /*
+        输入：'a,c,b,a,e,d'，'a,b,c,a,d,f'
+        输出：4 即最长公共子序列为'a,b,a,d'
+
+        最长公共子序列：出现顺序相同，但不要求连续
+     */
+    function getMaxStr(s1, s2) {
+      let m = s1.length;
+      let n = s2.length;
+      let arr = [];
+      for (let i = 0; i <= m; i++) {
+        arr[i] = new Array(n+1).fill(0);
+      }
+      for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+          let a = s1[i-1];
+          let b = s2[j-1];
+          if (a === b) {
+            arr[i][j] = arr[i-1][j-1] + 1;
+          } else {
+            arr[i][j] = Math.max(arr[i][j-1],arr[i-1][j]);
+          }
+        }
+      }
+      console.log(arr);
+      return arr[m][n]
+    }
+    console.log(getMaxStr('abcadf','acbaed'));
+    console.log(getMaxStr('abc','def'));
+  </script>
+</body>
+
+</html>

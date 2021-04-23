@@ -1,0 +1,67 @@
+<!--
+ * @Description: 
+ * @Author: zhangwen
+ * @Date: 2020-09-18
+ * @LastEditors: zhangwen
+ * @LastEditTime: 2020-09-18
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /*
+    已知： 1. 可用的硬币面额及其数量；2. 要找零的面额值
+    求解：所需的最少硬币个数的找法；
+    例如：现有以下面额： d1 = 1; d2=5; d3=10; d4 = 25;
+    求解：找36的零钱，最少的硬币找法；
+    https://blog.csdn.net/ggdhs/article/details/90707869
+  */
+
+    /**
+     * @name: 
+     * @param: coins: 现有的可用的硬币数组
+               amount: 需要找零的金额数 
+     * @return： arr：包含找零的各个面额的硬币数量
+     */
+    function minCinChange(coins, amount) {
+      const cache = [];
+      const makeChange = function (value) {
+        if (!value) {
+          return [];
+        }
+        if (cache[value]) {
+          return cache[value];
+        }
+        let min = [];
+        let newMin;
+        let newAmount;
+        for (let i = 0; i < coins.length; i++) {
+          const coin = coins[i];
+          newAmount = value - coin;
+          // 当前要找零的金额应大于等于当前硬币金额，即当前这枚硬币是可用的
+          if (newAmount >= 0) {
+            newMin = makeChange(newAmount);
+          }
+          if (newAmount >= 0 && (newMin.length < min.length - 1 || !min.length) && (newMin.length || !newAmount)) {
+            min = [coin].concat(newMin);
+            console.log('new min:  ' + min + '  for   ' + amount);
+          }
+        }
+        return (cache[value] = min);
+      }
+      return makeChange(amount);
+    }
+
+    console.log(minCinChange([1,3,4], 6))
+  </script>
+</body>
+
+</html>

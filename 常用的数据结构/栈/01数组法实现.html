@@ -1,0 +1,50 @@
+<!--
+ * @Description: 
+ * @Author: zhangwen
+ * @Date: 2020-09-21
+ * @LastEditors: zhangwen
+ * @LastEditTime: 2020-09-21
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class Stack {
+      constructor() {
+        this.items = []; //用来保存栈里面的元素
+      }
+      // 向栈里面添加元素
+      push(element) {
+        this.items.push(element);
+      }
+      // 从栈顶删除元素
+      pop() {
+        return this.items.pop();
+      }
+      // 返回栈顶的元素
+      peek() {
+        return this.items[this.items.length-1];
+      }
+    }
+
+    let stack = new Stack();
+    stack.push(1)
+    stack.push(2)
+    stack.push(3)
+    console.log(stack);
+    console.log(stack.pop());
+    console.log(stack);
+    console.log(stack.peek());
+    
+  </script>
+</body>
+
+</html>

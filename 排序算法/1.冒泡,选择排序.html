@@ -1,0 +1,86 @@
+<!--
+ * @Description: 
+ * @Author: zhangwen
+ * @Date: 2020-08-05
+ * @LastEditors: zhangwen
+ * @LastEditTime: 2020-08-05
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /*
+      冒泡排序： 将当前项和后一项做对比，如果当前项大于后一项，则交换两项的位置；
+            第一轮排序后：数组元素中的最后一项存放的是最大值
+    */
+    function sort1(array) {
+      let len = array.length;
+      // 定义一个标识符，如果秘书组中每一项都不需要交换，则整个数组即为有序数组
+      let isFlag = true;
+      for (let i = 0; i < len - 1; i++) {
+        // i控制比较轮数
+        for (let j = 0; j < len - 1 - i; j++) {
+          // j 控制每轮比较的趟数，最末尾排好的最大数不用比较
+          if (array[j] > array[j + 1]) {
+            let temp = array[j + 1];
+            array[j + 1] = array[j];
+            array[j] = temp;
+            isFlag = false;
+          }
+        }
+        if(isFlag) break;
+      }
+      return array;
+    }
+
+    var array = [9, 4, 12, 8, 21, 2];
+    /**
+      [9, 4, 12, 8, 21,2]，length=6;
+      i=0时，第一轮：
+         第一趟：4,9,12,8,21,2
+         第二趟：4,9,12,8,21,2
+         第三趟：4，9,8,12,21,2
+         第四趟：4,9,8,12,21,2
+         第五趟：4,9,8,12,2,21
+      i=1时， 第二轮
+        第一趟：4,9,8,12,2,21
+        第二趟：4,8,9,12,2,21
+        第三趟：4,8,9,12，2,21
+        第四趟：4,8,9,2,12,21
+      ...
+    */
+    console.log(sort1(array));
+    console.log(sort1([1,2,3,4,6,9]));
+
+    /*
+      选择排序： 每次找到数组中的最小值，然后用最小值和当前循环的数组项交换
+          每轮循环时找到数组中最小项的下标
+    */
+    function sort2(array) {
+      let len = array.length;
+      for (let i = 0; i < len - 1; i++) {
+        let indexMin = i;   //存放每轮中最小值的下标
+        for (let j = i + 1; j < len; j++) {
+          if (array[j] < array[indexMin]) {
+            indexMin = j;
+          }
+        }
+        let temp = array[i];
+        array[i] = array[indexMin];
+        array[indexMin] = temp;
+      }
+      return array;
+    }
+    // console.log(sort2(array));
+  </script>
+</body>
+
+</html>

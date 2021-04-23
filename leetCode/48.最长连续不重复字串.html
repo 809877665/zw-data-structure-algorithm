@@ -1,0 +1,60 @@
+<!--
+ * @Description: 
+ * @Author: zhangwen
+ * @Date: 2020-09-28
+ * @LastEditors: zhangwen
+ * @LastEditTime: 2020-09-28
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // function getMaxStr(s) {
+    //   let len = s.length;
+    //   let maxStr = '',
+    //     str = '';
+    //   for (let i = 0; i < len; i++) {
+    //     let char = s[i];
+    //     if (str.includes(char)) {
+    //       str = str.substr(str.indexOf(char) + 1) + char;
+    //     } else {
+    //       str += char;
+    //     }
+    //     maxStr = str.length > maxStr.length ? str : maxStr;
+    //   }
+    //   return maxStr;
+    // }
+
+    // console.log(getMaxStr('abcabcbb'));
+
+    function maxLength(arr) {
+      let len = 0;
+      let temp = [];
+      for (let i = 0; i < arr.length; i++) {
+        let ele = arr[i];
+        if (temp.includes(ele)) {
+          temp = temp.splice(i + 1);
+          temp.push(ele);
+        } else {
+          temp.push(ele);
+        }
+        len = temp.length > len ? temp.length : len;
+      }
+      return len;
+    }
+    console.log(maxLength([1988,10036,13287,24377,29106,8933,9124,14803,28081,28614,19887,4078,23539,2956,7669,11918,25334,6672,8961,15335,23223,29613,29389,22745,30755,29417,20951,31671,19662,17752,20600,26700,28391,17342,21105,26912,23916,5492,13511,11767,29850,8973,1490,29595,1704,7224,912,22747,27828,5352,21567,1236,9214,32179,11562,623,19284,31608,23491,29995,5325,25157,25842,2845,32698,22392,11949,20533,28378,24356,26569,18114,28365,22710,8719,26936,16587,11992,21139,31025,32150,16021,11329,16307,25773,14782,2233,8881,11203,2189,21341,13268,25199,28297,10919,7291,15909,30377,11201,2816,25189,27324,7247,1341,31026,23048,26255,17486,12230,29490,7077,32153,27524,13662,28720,15628,19246,15510,26401,13478,18520,11632,7885,9529,3357,1003,29761,17518,21008,18843,28885,17417,22645,30470,13828,24174,21682,1101,23418,3172,23808,27919,29551,18458,12390,11146,10548,360,27112,28419,11787,10070,29692,4456,26684,27362,20541,4149,6245,7934,1891,3220,26898,23001,21875,5832,7309,15199,26163,18635,19704,32003,13793,29750,29336,11964,27172,264
+
+]));
+    
+  </script>
+</body>
+
+</html>

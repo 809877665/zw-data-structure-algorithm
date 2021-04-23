@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    给你一个只包含 '(' 和 ')' 的字符串，找出最长有效（格式正确且连续）括号子串的长度。
+    示例 1：
+      输入：s = "(()"
+      输出：2
+      解释：最长有效括号子串是 "()"
+    示例 2：
+      输入：s = ")()())"
+      输出：4
+      解释：最长有效括号子串是 "()()"
+   
+   -->
+  <script>
+   // 定义一个栈的结构
+   class Stack {
+      constructor(items) {
+        this.items = items
+      }
+      // 取出栈顶元素
+      getStackTop() {
+        return this.items[this.items.length-1]
+      }
+      // 判断是否为空栈
+      isEmpty() {
+        return this.items.length === 0
+      }
+      // 向栈顶添加元素
+      addStackTop(item) {
+        return this.items.push(item)
+      }
+      // 删除栈顶元素
+      popStackTop() {
+        return this.items.pop()
+      }
+      // 获取栈顶元素的下标
+      getStackTopIndex() {
+        return this.items.length-1
+      }
+    }
+
+    var longestValidParentheses = function(s) {
+      if(s.length===0) return 0
+      let res = 0
+      let stack = new Stack([])   // 存放对应字符的下标
+      for(let i=0;i<s.length;i++) {
+        let char = s.charAt(i);
+        if (char == ')' && !stack.isEmpty() && s[stack.getStackTop()] == '(') {
+            // char = ‘右括号’ && 栈不为空 && 栈顶元素为‘左括号’
+            stack.popStackTop();
+            // 求最大值
+            res = Math.max(res, i - (stack.isEmpty() ? -1 : stack.getStackTop()));
+        }
+        // 其它情况就将字符入栈
+        else {
+            stack.addStackTop(i);
+        }
+      }
+      return res
+    };
+
+    // console.log(longestValidParentheses('(()'))
+    // console.log(longestValidParentheses("()(()"))
+    console.log(longestValidParentheses(')()())'))
+    // console.log(longestValidParentheses(''))
+
+
+    /*
+      解答思路：
+      1. 创建一个栈的数据结构，存放每个字符括号在字符串中的下标；
+      2. 如果遇到左括号(，则直接将其下标入栈；
+        如果遇到右括号)， 则判断当前的栈是否为空，如果不为空，则拿出栈顶的元素找到对应的字符，如果该字符为左括号(,
+          则说明当前为一个最小的连续字符；长度为2；栈顶元素出栈，更新有效括号的长度；
+        maxLen = Math.max(maxLen, i - (stack.isEmpty() ? -1 : stack.getStackTop()) )
+    */
+
+
+    
+  </script>
+</body>
+</html>

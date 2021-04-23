@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /**
+     * Initialize your data structure here. Set the size of the deque to be k.
+     * @param {number} k
+     */
+    var MyCircularDeque = function (k) {
+      this.size = k;
+      this.list = [];
+    };
+
+    /**
+     * Adds an item at the front of Deque. Return true if the operation is successful. 
+     * @param {number} value
+     * @return {boolean}
+     */
+    MyCircularDeque.prototype.insertFront = function (value) {
+      if (this.isFull()) {
+        return false;
+      }
+      let res = this.list.unshift(value);
+      if (res) return true;
+    };
+
+    /**
+     * Adds an item at the rear of Deque. Return true if the operation is successful. 
+     * @param {number} value
+     * @return {boolean}
+     */
+    MyCircularDeque.prototype.insertLast = function (value) {
+      if (this.isFull()) {
+        return false;
+      }
+      let res = this.list.push(value);
+      if (res) {
+        return true;
+      }
+    };
+
+    /**
+     * Deletes an item from the front of Deque. Return true if the operation is successful.
+     * @return {boolean}
+     */
+    MyCircularDeque.prototype.deleteFront = function () {
+      let res = this.list.pop();
+      if (res) {
+        return true;
+      }
+    };
+
+    /**
+     * Deletes an item from the rear of Deque. Return true if the operation is successful.
+     * @return {boolean}
+     */
+    MyCircularDeque.prototype.deleteLast = function () {
+      if (this.isEmpty()) {
+        return false;
+      }
+      let res = this.list.pop();
+      if (res) {
+        return true;
+      }
+    };
+
+    /**
+     * Get the front item from the deque.
+     * @return {number}
+     */
+    MyCircularDeque.prototype.getFront = function () {
+      if (this.isEmpty()) {
+        return -1;
+      }
+      debugger
+      return this.list[0];
+    };
+
+    /**
+     * Get the last item from the deque.
+     * @return {number}
+     */
+    MyCircularDeque.prototype.getRear = function () {
+      if (this.isEmpty()) {
+        return -1;
+      }
+      return this.list[this.list.length - 1];
+    };
+
+    /**
+     * Checks whether the circular deque is empty or not.
+     * @return {boolean}
+     */
+    MyCircularDeque.prototype.isEmpty = function () {
+      return this.list.length > 0 ? false : true;
+    };
+
+    /**
+     * Checks whether the circular deque is full or not.
+     * @return {boolean}
+     */
+    MyCircularDeque.prototype.isFull = function () {
+      return this.list.length == this.size;
+    };
+
+    var obj = new MyCircularDeque(3)
+    console.log(obj.insertLast(1));
+    console.log(obj.insertLast(2));
+    console.log(obj.insertFront(3));
+    console.log(obj.insertFront(4));
+    console.log(obj.getRear());
+    console.log(obj.isFull());
+    console.log(obj.deleteLast());
+    console.log(obj.insertFront(4));
+    console.log(obj.getFront());
+  </script>
+</body>
+
+</html>

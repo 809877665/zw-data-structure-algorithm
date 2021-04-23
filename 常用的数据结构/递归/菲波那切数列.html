@@ -1,0 +1,68 @@
+<!--
+ * @Description: 
+ * @Author: zhangwen
+ * @Date: 2020-09-18
+ * @LastEditors: zhangwen
+ * @LastEditTime: 2020-09-18
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /*
+      f(0) = 0;
+      f(1) = 1;
+      f(2) = 1;
+      f(3) = 2
+      F(4) = 3
+      f(5) = 5
+      f(6) = 8
+      ...
+      f(n) = f(n-1) + f(n-2)
+    */
+
+    function getNum(n) {
+      if (n <= 1) {
+        return n;
+      }
+      let a = 0,
+        b = 1;
+      let sum = 0;
+      for (let i = 2; i <= n; i++) {
+        sum = a + b;
+        a = b;
+        b = sum;
+      }
+      return sum;
+    }
+    console.log(getNum(5));
+
+    // 递归求解法
+    let map = new Map();
+    function getNum2(n) {
+      if (n <= 1) {
+        return n;
+      }
+      if(map.has(n)) {
+        return map.get(n);
+      }else {
+        for (let i = 2; i <= n; i++) {
+          map.set(i, getNum2(i - 1) + getNum2(i - 2));
+        }
+        return map.get(n);
+      }
+    }
+
+    console.log(getNum2(5));
+  </script>
+</body>
+
+</html>

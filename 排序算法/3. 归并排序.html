@@ -1,0 +1,71 @@
+<!--
+ * @Description: 
+ * @Author: zhangwen
+ * @Date: 2020-08-12
+ * @LastEditors: zhangwen
+ * @LastEditTime: 2020-08-12
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /*
+      归并排序：
+      拆分：    1. 将序列对半拆分成左右两部分元素，2. 将1中的左，右部分元素分别进行1操作
+          3. 直到将序列拆分为一个一个的元素序列
+      合并：将拆分的一个个元素排序后进行两两合并；合并为一个有序的序列
+      参考：https://www.cnblogs.com/chengxiao/p/6194356.html 
+    **/
+
+    function mergeSort(arr) {
+      let temp = new Array(arr.length);
+      sort(arr, 0, arr.length - 1, temp);
+      return temp;
+    }
+
+    function sort(arr, left, right, tempArr) {
+      // 只有一个元素时直接返回
+      if(left<right) {
+        let mid = Math.floor((left + right) / 2);
+        sort(arr, left, mid, tempArr);
+        sort(arr, mid + 1, right, tempArr);
+        merge(arr, left, mid, right, tempArr);
+      }
+    }
+
+    function merge(arr, left, mid, right, tempArr) {
+      let i = left;
+      let t = 0;
+      let j = mid+1;
+      // 备份左边的数组
+      while (i <= mid && j <= right) {
+        if (arr[i] <= arr[j]) {
+          tempArr[t++] = arr[i++];
+        } else {
+          tempArr[t++] = arr[j++];
+        }
+      }
+      while (i <= mid) {
+        tempArr[t++] = arr[i++];
+      }
+      while (j <= right) {
+        tempArr[t++] = arr[j++];
+      }
+      t=0;
+      while(left <= right){
+        arr[left++] = tempArr[t++];
+      }
+    }
+    console.log(mergeSort([12, 21, 32, 21, 8, 9]));
+  </script>
+</body>
+
+</html>

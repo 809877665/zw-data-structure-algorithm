@@ -1,0 +1,85 @@
+<!--
+ * @Description: 
+ * @Author: zhangwen
+ * @Date: 2020-08-06
+ * @LastEditors: zhangwen
+ * @LastEditTime: 2020-08-07
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /*
+      判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。
+      示例 1:
+      输入: 121
+      输出: true
+      你能不将整数转为字符串来解决这个问题吗？
+    */
+
+    // 字符串法
+    var isPalindrome = function (x) {
+      // if (x < 0) return false;
+      // var s = x + '';
+      // var arr1 = [...s];
+      // var flag = true;
+      // for (let i = 0, len = arr1.length; i < len/2; i++) {
+      //   if (arr1[i] != arr1[len-1-i]) {
+      //     flag = false;
+      //     break;
+      //   }
+      // }
+      // return flag
+
+      // 双指针法
+      let s = x + '';
+      let flag = true;
+      let start = 0;
+      let end = s.length - 1;
+      while (start < end) {
+        if (s.charAt(start) != s.charAt(end)) {
+          flag = false;
+          break;
+        }
+        start++;
+        end--;
+      }
+      return flag;
+    };
+
+    // 数字判断法
+    var isPalindrome2 = function (x) {
+      if (x < 0) return false;
+      if (x != 0 && x % 10 == 0) return false;
+      let a = x;
+      let xx = 0
+      while (a != 0) {
+        let carry = a % 10;
+        xx = xx * 10 + carry;
+        a = Math.floor(a / 10);
+      }
+      return x == xx;
+    }
+    
+    /*
+      数字法时：分别获取个位，十位，百位....，然后用计算出的数值和原来的数值作比较
+      x=121;
+      a: 121    Math.floor(121/10=12.1)=12   Math.floor(1.2)=1     Math.floor(0.1) = 0   
+      xx: 0      0*10+1=1                     1*10+2 = 12             121
+      carry:       1                              2                    1
+    */
+
+    console.log(isPalindrome2(121));
+    console.log(isPalindrome2(10));
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!--
+ * @Description: 
+ * @Author: zhangwen
+ * @Date: 2020-07-31
+ * @LastEditors: zhangwen
+ * @LastEditTime: 2020-07-31
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+   <script>
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+ var findMagicIndex = function (nums) {
+    return search(nums, 0, nums.length - 1);
+};
+
+function search(arr, start, end) {
+    if (start > end) {
+        return -1;
+    }
+    var mid = parseInt((start + end) / 2);
+    var pre = search(arr, start, mid-1);
+    if(pre != -1) {
+        return pre;
+    }else if(arr[mid] == mid) {
+        return mid;
+    }else {
+       return search(arr, mid+1,end);
+    }
+}
+
+console.log(findMagicIndex([1,1,1]));
+
+   
+   </script>
+</body>
+</html>

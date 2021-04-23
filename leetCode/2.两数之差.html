@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+      给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出差为目标值的那两个整数，并返回他们的数组下标。
+      你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。
+
+      示例:
+      给定 nums = [2, 7, 11, 15], target = 9
+      因为 nums[2] - nums[0] = 11 - 2 = 9
+      所以返回 [2, 0]
+      a-b = c；a-被减数；b-减数；c-差
+   -->
+  <script>
+    let map = new Map()
+    var getTwoDiff = function(arr, target){
+      let res = []
+      for(let i=0; i<arr.length;i++) {
+        let ele = arr[i]
+        if(!map.has(ele)) {
+          map.set(ele, i)
+        }
+        if(map.has(ele - target)) {
+          res.push(i)
+          res.push(map.get(ele - target))
+          break
+        }
+      }
+      return res;
+    }
+    console.log(getTwoDiff([2,7,11,15], 9));
+  </script>
+</body>
+</html>

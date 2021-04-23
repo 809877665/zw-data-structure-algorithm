@@ -1,0 +1,108 @@
+<!--
+ * @Description: 
+ * @Author: zhangwen
+ * @Date: 2020-08-03
+ * @LastEditors: zhangwen
+ * @LastEditTime: 2020-08-04
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /**
+        一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。
+        机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。
+        问总共有多少条不同的路径？
+        来源：力扣（LeetCode）
+
+        思路： dp[row][col] = dp[row-1][col] + dp[row][col-1]      
+              即当前单元格的不同路径数 = 到达正上方单元格的路径数 + 到达左侧单元格的路径数 
+       */
+
+    // 二维数组法  
+    //  n行m列
+    // var uniquePaths = function (m, n) {
+    //   // 声明一个长度为n的二维数组
+    //   // array[row][col]:  表示到第row+1行，col+1列单元格的不同路径数
+    //   let array = [];
+    //   for (let rows = 0; rows < n; rows++) {
+    //     array[rows] = []
+    //   }
+    //   // 只有一行时
+    //   for (let cols = 0; cols < m; cols++) {
+    //     array[0][cols] = 1;
+    //   }
+    //   // 只有一列
+    //   for (let rows = 0; rows < n; rows++) {
+    //     array[rows][0] = 1;
+    //   }
+    //   for (let i = 1; i < n; i++) {
+    //     for (let j = 1; j < m; j++) {
+    //       array[i][j] = array[i - 1][j] + array[i][j - 1];
+    //     }
+    //   }
+    //   return array[n-1][m-1];
+    // };
+
+    // console.log(uniquePaths(7, 3));
+
+    // // 递归遍历法
+    // var uniquePaths = function (m, n) {
+    //   return walk(true, m, n) + walk(false, m, n);
+    // }
+
+    // function walk(isLeft, m, n) {
+    //   if (isLeft) {
+    //     m--;
+    //     if(m==1) return 1;
+    //   } else {
+    //     n--;
+    //     if (n == 1) return 1;
+    //   }
+    //   return walk(true, m, n) + walk(false, m, n);
+    // }
+    var map1 = new Map();
+var map2 = new Map();
+var uniquePaths = function (m, n) {
+    if (m == 1 || n == 1) {
+        return 1;
+    }
+    return walk(true, m, n) + walk(false, m, n);
+}
+function walk(isLeft, m, n) {
+    let left = 0;
+    let top = 0;
+
+    if (isLeft) {
+        m--;
+        if (m == 1) return 1;
+        if (map1.has(m)) {
+            left = map1.get(m)
+        } else {
+            map1.set(m, walk(true, m, n));
+        }
+
+    } else {
+        n--;
+        if (n == 1) return 1;
+        if (map2.has(n)) {
+            top = map2.get(n)
+        } else {
+            map2.set(n, walk(false, m, n));
+        }
+    }
+    return walk(true, m, n) + walk(false, m, n);
+}
+    console.log(uniquePaths(7, 3));
+  </script>
+</body>
+
+</html>

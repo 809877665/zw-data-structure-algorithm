@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    给定一个未经排序的整数数组，找到最长且 连续递增的子序列，并返回该序列的长度。
+    连续递增的子序列 可以由两个下标 l 和 r（l < r）确定，如果对于每个 l <= i < r，都有 nums[i] < nums[i + 1] ，
+    那么子序列 [nums[l], nums[l + 1], ..., nums[r - 1], nums[r]] 就是连续递增子序列。
+    输入：nums = [1,3,5,4,7]
+    输出：3
+    解释：最长连续递增序列是 [1,3,5], 长度为3。
+    尽管 [1,3,5,7] 也是升序的子序列, 但它不是连续的，因为 5 和 7 在原数组里被 4 隔开。 
+    输入：nums = [2,2,2,2,2]
+    输出：1
+    解释：最长连续递增序列是 [2], 长度为1。
+   -->
+
+   <script>
+
+    class Stack{
+      constructor(items) {
+        this.items = items
+      }
+      // 清空栈
+      clearItems() {
+        this.items = []
+      }
+      // 往栈顶添加元素
+      pushStackTop(item) {
+        this.items.push(item)
+      }
+      // 获取栈的长度
+      getStackLen() {
+        return this.items.length
+      }
+      // 判断栈是否为空
+      isEmpty() {
+        return this.items.length === 0
+      }
+      // 获取栈顶的元素
+      getTopItem() {
+        if(!this.isEmpty()) return this.items[this.items.length-1] 
+      }
+    }
+
+    var findLengthOfLCIS2 = function(nums) {
+      if(nums.length < 2) {
+        return nums.length;
+      }
+      let stack = new Stack([])
+      let maxLen = 0
+      for(let i=0;i<nums.length;i++) {
+        if(stack.isEmpty()) {
+          stack.pushStackTop(nums[i])
+          continue;
+        }
+        if(nums[i] > stack.getTopItem()) {
+          stack.pushStackTop(nums[i])
+        }else {
+          maxLen = Math.max(maxLen, stack.getStackLen())
+          stack.clearItems()
+          stack.pushStackTop(nums[i])
+        }
+      }
+      return Math.max(maxLen, stack.getStackLen())
+    };
+
+    var findLengthOfLCIS = function(nums) {
+      let maxLen = 0;
+      let start = 0;    // 记录每一个递增子序列的开始位置下标
+      for(let i=0; i<nums.length; i++) {
+        if(nums[i] <= nums[i-1] ) {
+          // 当前元素不符合递增子序列的条件
+          maxLen = Math.max(i-start, maxLen);
+          start = i
+          // 排除了最大子序列出现在数组末尾的可能
+          if (nums.length - start < maxLen) {
+            return maxLen
+          }
+        }
+      }
+      // 是为了防止最大子序列出现在数组的末尾
+      return Math.max(maxLen, nums.length-start)
+    };
+
+
+    // console.log(findLengthOfLCIS([1,3,5,7]));
+    console.log(findLengthOfLCIS([1,3,5,4,7]));
+    // console.log(findLengthOfLCIS([2,1,3]));
+    // console.log(findLengthOfLCIS([2,2,2,2,2]));
+    // console.log(findLengthOfLCIS([1,3,5,4,2,3,4,5]));
+
+   </script>
+</body>
+</html>
