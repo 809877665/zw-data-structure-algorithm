@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    题目描述：给定一个整数数组 arr，找到 min(b) 的总和，其中 b 的范围为 arr 的每个（连续）子数组。
+             由于答案可能很大，因此 返回答案模 10^9 + 7 。
+      输入：arr = [3,1,2,4]
+      输出：17
+      解释：
+      子数组为 [3]，[1]，[2]，[4]，[3,1]，[1,2]，[2,4]，[3,1,2]，[1,2,4]，[3,1,2,4]。 
+      最小值为 3，1，2，4，1，1，2，1，1，1，和为 17。
+      ==>>>即每个连续子数组中最小连续和相加；
+   -->
+
+   <!-- 
+     https://zhuanlan.zhihu.com/p/103562972
+     方案1: 常规方法；！！！！！！！！！but: 超出时间限制：
+          1. 找出数组中所有的连续子数组
+          2. 找出每个子数组中连续子数组的最小和组成新的数组
+          3. 将找出的最小和数组相加；
+     
+    -->
+
+   <script>
+    //  获取数组中连续子数组的最小和
+     var getMinSum = function(arr) {
+        let minSum = 1e9 + 7    // 相当于1*10^9 + 7 = Math.pow(10,9)+7 === 1e9+7 
+        let len = arr.length;
+        let sum = 0
+        for(let i=0;i<len;i++) {
+          let j = i+1;
+          sum = arr[i]
+          minSum = Math.min(sum, minSum)
+          while(j<len) {
+            sum += arr[j]
+            minSum = Math.min(sum, minSum)
+            j++
+          }
+        }
+        return minSum
+     }
+    
+    //  数组中所有连续子数组中最小和相加
+    var sumSubarrayMins1 = function(arr) {   
+      if(arr.length <= 0) return 0
+      let len = arr.length;
+      let list = []
+      for(let i=0;i<len;i++) {
+        let j = i+1;
+        sum = arr[i]
+        list.push(sum)
+        while(j < len) {
+          list.push(getMinSum(arr.slice(i,j+1)))
+          j++
+        }
+      }
+      return list.reduce((a,b) => a+b, 0)
+    };
+
+
+
+    // console.log(sumSubarrayMins([11,81,94,43,3]));
+
+
+    /**
+     * @param {number[]} arr
+     * @return {number}
+     */
+    var sumSubarrayMins = function(arr) {
+        let mod = 1e9 + 7;
+        let stack = [];
+        let leftStack = [];
+        for (let i = 0; i < arr.length; i++) {
+          while (stack.length && arr[stack[stack.length - 1]] >= arr[i]) { 
+            stack.pop();    //删除栈顶的元素
+          }
+          leftStack[i] = stack.length ? i - stack[stack.length - 1] : i + 1
+          stack.push(i);
+        }
+        stack = [];
+        let rightStack = [];
+        for (let i = arr.length - 1; i >= 0; i--) {
+            while (stack.length && arr[stack[stack.length - 1]] > arr[i]) {
+                stack.pop();
+            }
+            rightStack[i] = stack.length ? stack[stack.length - 1] - i : arr.length - i
+            stack.push(i);
+        }
+        let res = 0;
+        for (let i = 0; i < arr.length; i++) {
+            res += (leftStack[i] * rightStack[i] * arr[i]);
+            res %= mod;
+        }
+        return res;
+
+    };
+   </script>
+</body>
+</html>
+
