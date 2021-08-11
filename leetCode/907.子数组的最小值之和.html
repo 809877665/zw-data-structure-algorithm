@@ -15,7 +15,7 @@
       解释：
       子数组为 [3]，[1]，[2]，[4]，[3,1]，[1,2]，[2,4]，[3,1,2]，[1,2,4]，[3,1,2,4]。 
       最小值为 3，1，2，4，1，1，2，1，1，1，和为 17。
-      ==>>>即每个连续子数组中最小连续和相加；
+      ==>>>即每个连续子数组中最小连续和相加；(lianxuzishuzu )
    -->
 
    <!-- 
@@ -68,38 +68,49 @@
     // console.log(sumSubarrayMins([11,81,94,43,3]));
 
 
+    // 获取栈顶的元素
+    var peek = function(arr) {
+      return arr[arr.length-1]
+    }
+
     /**
      * @param {number[]} arr
      * @return {number}
      */
     var sumSubarrayMins = function(arr) {
         let mod = 1e9 + 7;
-        let stack = [];
+        let stack = [];   // 存放下标
         let leftStack = [];
         for (let i = 0; i < arr.length; i++) {
-          while (stack.length && arr[stack[stack.length - 1]] >= arr[i]) { 
+          while (stack.length && arr[peek(stack)] >= arr[i]) { 
+            // 保证栈为单调递增的，如果栈顶元素比当前数组元素大，则删除栈顶元素，一直删除至栈顶元素小于当前元素
             stack.pop();    //删除栈顶的元素
           }
-          leftStack[i] = stack.length ? i - stack[stack.length - 1] : i + 1
+          leftStack[i] = stack.length ? i - peek(stack) : i + 1
           stack.push(i);
         }
+        console.log('=======', leftStack);
         stack = [];
         let rightStack = [];
         for (let i = arr.length - 1; i >= 0; i--) {
-            while (stack.length && arr[stack[stack.length - 1]] > arr[i]) {
+            while (stack.length && arr[peek(stack)] > arr[i]) {
                 stack.pop();
             }
-            rightStack[i] = stack.length ? stack[stack.length - 1] - i : arr.length - i
+            rightStack[i] = stack.length ? peek(stack) - i : arr.length - i
             stack.push(i);
         }
+        console.log('=======rightStack：', rightStack);
+
         let res = 0;
         for (let i = 0; i < arr.length; i++) {
             res += (leftStack[i] * rightStack[i] * arr[i]);
             res %= mod;
         }
         return res;
-
     };
+
+    // console.log(sumSubarrayMins1([3,1,2,4]));
+    console.log(sumSubarrayMins([3,1,2,4]));
    </script>
 </body>
 </html>
