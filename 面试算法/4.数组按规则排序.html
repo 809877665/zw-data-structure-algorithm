@@ -10,12 +10,19 @@
   <script>
     /*
       将array 数组（仅包含整数的无序的数组）进行重新排列，
-      排序后数组符合特征 array[0] <= array[1] >= array[2] <= array[3]…。
+      排序后数组符合特征 array[0] <= array[1] >= array[2] <= array[3] >=array[4] <= array[5] >= array[6]
       示例:
       输入: array = [2,7,2,1,6,3]
       输出: [2,7,1,6,2,3] 或其他符合要求的答案 
 
-      分析： 奇数位，下标为 0，2,4,6....
+      分析： 
+            i = 0
+          1. 先将元素按照升序排列，此时第一个元素 小于 第二个元素array[0] <= array[1]，符合题目要求，不做处理； i+1 = 1
+          2. 第二个元素和第三元素任然时升序排列， 不符合题目要求array[1] >= array[2]， 所以将他两的值交换； i+1 = 2
+          3. 第三个元素和第四个元素依然是升序排列，符合题目要求array[2] <= array[3]，无需处理； i+1 = 3;
+          4. 第四个元素和第五个元素是升序排列，但是按照题目要求array[3] >=array[4]为降序排列， 所以交换他两的值， i+1 = 4
+          。。。。。
+          综上可得：i=1开始需要交换； i+2步长后需要交换； 
     */
     function sort(array = []) {
       if (!array || !array.length) return []
@@ -33,8 +40,8 @@
       arr[i] = arr[j]
       arr[j] = temp
     }
-    // const test = sort([1, 2, 3, 4, 5])
-    // console.log(test) //[ 1, 3, 2, 5, 4 ]
+    const test = sort([1, 2, 3, 4, 5])
+    console.log(test) //[ 1, 3, 2, 5, 4 ]
 
 
     // Array.sort(compareFun)
@@ -42,24 +49,21 @@
 
     function sort2(arr) {
       if(!arr || !arr.length) return []
-      arr.sort((a,b) => a-b)
-      // console.log(arr);   // [1,2,3,4,5]
-      let i=1
+      arr.sort((a,b) => b-a) 
+      let i=0
       while(i < arr.length) {
-        if (arr[i] < arr[i+2] ) {
+        if (arr[i] > arr[i+1] ) {
+          // 此时应该是按升序排列，但是数据为降序，所以需要交换
           let temp = arr[i]
           arr[i] = arr[i+1]
           arr[i+1] = temp
-          i = i+2
         }
+        i = i+2
       }
       return arr
     }
 
-
-
-    
-    console.log(sort2([1,3,2,4,5]));
+    console.log(sort2([1,3,2,4,5]));    // [4,5,2,3,1]
 
 
 
