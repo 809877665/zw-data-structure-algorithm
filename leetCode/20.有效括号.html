@@ -68,9 +68,41 @@
       return stack.isEmpty()
     };
 
+    var isValid2 = function(s) {
+      let obj = {
+        '(': ')',
+        '{': '}',
+        '[': ']'
+      }
+      let stack = []
+      for(let i=0;i<s.length;i++) {
+        let char = s.charAt(i)
+        // 将每个元素加入stack,并判断栈是否为空，如果为空直接加入；
+        // 不为空时， 判断栈顶元素和当前要加入的元素是否配对， 配对的话删除栈顶元素，进入下一次循环；不配对的话直接加入栈顶元素
+        if(stack.length > 0) {
+          let topEle = stack[stack.length-1]
+          if (obj[topEle] === char) {
+            // 配对，删除栈顶元素
+            stack.pop()
+          } else {
+            // 不配对，加当前元素入栈
+            stack.push(char)
+          }
+        }else {
+          stack.push(char)
+        }
+      }
+      // 左后判断栈是否为空，为空的话就说明全都匹配上,返回true；否则返回false
+      return stack.length === 0 ? true : false
+    };
+
     // console.log(isValid("()[]{}"))
     // console.log(isValid("()"))
-    console.log(isValid("}"))
+    // console.log(isValid("}"))
+
+    console.log(isValid2("()[]{}"))
+    console.log(isValid2("()"))
+    console.log(isValid2("}"))
 
    </script>
 </body>
