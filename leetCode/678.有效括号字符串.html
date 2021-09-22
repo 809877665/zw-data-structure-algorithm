@@ -28,16 +28,64 @@
     输出: True
     注意:
     字符串大小将在 [1，100] 范围内。
+
+    分析：
+        1. 用两个栈分别存放左括号（stack1）和*号（stack2）；遇到右括号时，先比较stack1中是否不为空，如果不为空，则stack1出栈一个元素；
+        2. 如果stack1为空，则比较stack2是否为空；如果为空，则直接返回false；不为空则出栈一个元素；
+        3. 当右括号全部比较完毕后，比较stack1和stack2的长度；如果stack1长度为0则返回true; 如果stack1的长度 大于stack2的长度，则返回false;
+        4. 判断stack1的元素是否都存在对应的stack2的元素（stack1的元素在stack2的元素之前），如果stack1的元素有一个不存在对应的stack2元素；则直接返回false
    -->
 
    <script>
     var checkValidString = function(s) {
-      let result = true
-
-      return result
+      let stack1 = []     // 存放左括号下标
+      let stack2 = []     // 存放星号下标
+      let index = 0
+      while(index < s.length) {
+        let char = s.charAt(index)
+        if(char === '(') {
+          stack1.push(index)
+        }
+        if(char === '*') {
+          stack2.push(index)
+        }
+        if(char === ')') {
+          if( stack1.length > 0) {
+            stack1.pop()    // 删除栈顶元素
+          } else {
+            if(stack2.length > 0) {
+              stack2.pop()
+            } else {
+              return false
+            }
+          }
+        }
+        index++
+      }
+      // 比较stack1和stack2的元素
+      if(stack1.length==0) return true
+      if(stack1.length > stack2.length) return false;
+      // 判断stack1的元素是否都存在对应的stack2的元素（stack1的元素在stack2的元素之前），如果stack1的元素有一个不存在对应的stack2元素；则直接返回false
+      let flags = []
+      for(let i=0; i<stack1.length; i++) {
+        flags[i] = false
+      }
+      for(let i=0; i<stack1.length; i++) {
+        for(let j=0; j<stack2.length; j++) {
+          if(stack1[i] < stack2[j]) {
+            flags[i] = true
+            stack2.splice(j, 1)   // 一个*号匹配一个左括号；所以使用过的*号就在下一次比较时不予计算；
+            break;
+          }
+        }
+      }
+      return !flags.includes(false)
     };
 
-    console.log(checkValidString('(*))'));
+    // console.log(checkValidString('(*))'));
+    // console.log(checkValidString('('));
+    // console.log(checkValidString("((((()(()()()*()(((((*)()*(**(())))))(())()())(((())())())))))))(((((())*)))()))(()((*()*(*)))(*)()"));
+    console.log(checkValidString("(((((*(()((((*((**(((()()*)()()()*((((**)())*)*)))))))(())(()))())((*()()(((()((()*(())*(()**)()(())"));
 
    </script>
 </body>
