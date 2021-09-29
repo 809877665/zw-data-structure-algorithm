@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
+    示例 1：
+      输入：height = [0,1,0,2,1,0,1,3,2,1,2,1]
+      输出：6
+      解释：上面是由数组 [0,1,0,2,1,0,1,3,2,1,2,1] 表示的高度图，在这种情况下，可以接 6 个单位的雨水（蓝色部分表示雨水）。 
+    示例 2：
+      输入：height = [4,2,0,3,2,5]
+      输出：9
+       
+    提示：
+      n == height.length
+      1 <= n <= 2 * 104
+      0 <= height[i] <= 105
+   -->
+  <script>
+  var trap = function(height) {
+    if(height < 3) return 0
+    let res = 0
+    for(let i=1; i < height.length; i++) {
+      let ele = height[i]
+      // 取出当前数组中该元素以前最大的元素；该元素以后最大的元素
+      let preEle = 0;
+      let nextEle = 0;
+      // 此种写法取最大值，在leetcode上会执行超时
+      // preEle = Math.max(...height.slice(0, i))
+      // nextEle = Math.max(...height.slice(i+1))
+
+      // 改为for循环判断取最大值，LeetCode可以通过
+      for (let j=0; j<i; j++) {
+        preEle = Math.max(height[j], preEle);
+      }
+      for (let j=i+1; j<height.length; j++) {
+        nextEle = Math.max(height[j], nextEle);
+      }
+      if (preEle > ele && nextEle > ele) {
+        res += Math.min(preEle, nextEle) - ele;
+      } 
+    }
+    return res
+  };
+  var trap2 = function(height) {
+    if(height < 3) return 0
+    let res = 0
+    let len = height.length
+    let leftArr = []
+    let rightArr = []
+    leftArr[0] = height[0]
+    rightArr[len-1] = height[len - 1]
+    for(let i=1; i < len;i++) {
+      leftArr[i] = Math.max(height[i], leftArr[i-1])
+      rightArr[len-1-i] = Math.max(height[len-1-i], rightArr[len-i])
+    }
+    console.log('==============left',leftArr);
+    console.log('==============right',rightArr);
+
+    for(let i=1; i < len; i++) {
+      let ele = height[i]
+      let minEle = Math.min(leftArr[i], rightArr[i])
+      if (minEle > ele) {
+        res += minEle - ele;
+      } 
+    }
+    return res
+  };
+
+  console.log(trap2([4,2,0,3,2,5]));
+  console.log(trap2([0,1,0,2,1,0,1,3,2,1,2,1]));
+  </script>
+</body>
+</html>
