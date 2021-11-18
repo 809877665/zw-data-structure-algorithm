@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+      输入: s = "anagram", t = "nagaram"
+      输出: true
+      示例 2:
+
+      输入: s = "rat", t = "car"
+      输出: false
+-->
+  <script>
+    /**
+     * @param {string} s
+     * @param {string} t
+     * @return {boolean}
+     * 最优解，时间复杂度：O(n)；无嵌套循环，无排序；
+     */
+    var isAnagram = function(s, t) {
+      if(s.length !== t.length) return false
+      let map = new Map()
+      for(let i=0; i<s.length;i++) {
+        let count = (map.get(s[i]) || 0) + 1
+        map.set(s[i], count)
+      }
+      let arr = t.split('')
+      // 比较两个map的key和value是否相同
+      let keys = [...map.keys()]
+      for(let i=0; i<keys.length;i++) {
+        let count1 = map.get(keys[i])
+        let count2 = arr.filter(ele => ele === keys[i]).length
+        if(count1 !== count2) return false
+      }
+      return true
+    };
+
+    var isAnagram3 = function(s, t) {
+      if(s.length !== t.length) return false
+      s = s.split('').sort((a,b) => a.localeCompare(b)).toString()
+      t = t.split('').sort((a,b) => a.localeCompare(b)).toString()
+      return s===t
+    };
+
+
+    var isAnagram2 = function(s, t) {
+      let map = new Map()
+      let map2 = new Map()
+      for(let i=0; i<s.length;i++) {
+        let count = (map.get(s[i]) || 0) + 1
+        map.set(s[i], count)
+      }
+      for(let i=0; i<t.length;i++) {
+        let count = (map2.get(t[i]) || 0) + 1
+        map2.set(t[i],count)
+      }
+      // 比较两个map的key和value是否相同
+      let keys1 = [...map.keys()].sort((a,b) => a.localeCompare(b)).toString()
+      let keys2 = [...map2.keys()].sort((a,b) => a.localeCompare(b)).toString()
+      if(keys1.length !== keys2.length || keys1 !== keys2) return false
+      for(let i in keys1) {
+        let key = keys1[i]
+        if(map.get(key) !== map2.get(key)) return false
+      }
+      return true
+    };
+
+    // console.log(isAnagram("anagram", "nagaram"));
+    console.log(isAnagram("a","ab"));
+
+  </script>
+</body>
+</html>

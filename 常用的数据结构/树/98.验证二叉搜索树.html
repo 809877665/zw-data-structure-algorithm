@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+        1. 将节点进行中序遍历，左子树--根节点--右子树；得到的节点数组，判断是否为升序排列，是-true;否-false;
+        2. 递归法， 左子树找到最大值max；右子树找到最小值min；判断 max < root && min > root 即可；
+   -->
+    <script>
+        /**
+        * Definition for a binary tree node.
+        * function TreeNode(val, left, right) {
+        *     this.val = (val===undefined ? 0 : val)
+        *     this.left = (left===undefined ? null : left)
+        *     this.right = (right===undefined ? null : right)
+        * }
+        */
+        /**
+        * @param {TreeNode} root    // root是一个节点对象，不是数组
+        * @return {boolean}
+        */
+        var isValidBST = function(root) {
+          let stack = []
+          let rVal
+          while (stack.length || root !== null) {
+            while (root !== null) {
+              stack.push(root)
+              root = root.left
+            }
+            root = stack.pop()
+            // 中序遍历得到的节点值小于等于上一个节点值，则返回false
+            if(root.val <= rVal) return false
+            rVal = root.val
+            root = root.right
+          }
+          return true
+        };
+
+        console.log(isValidBST(2));       // true
+        console.log(isValidBST(1));       // true
+        console.log(isValidBST(3));       // true
+    </script>
+</body>
+</html>

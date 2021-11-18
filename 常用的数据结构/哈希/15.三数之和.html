@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 
+      给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？请你找出所有和为 0 且不重复的三元组。
+      注意：答案中不可以包含重复的三元组。
+      输入：nums = [-1,0,1,2,-1,-4]
+      输出：[[-1,-1,2],[-1,0,1]]  
+      输入：nums = []
+      输出：[]
+   -->
+
+    <script>
+        /****
+         *  分析： c = -(a+b)，相当于变相的求两数之和
+         *  先排序，在从头尾比较
+         */
+        /**
+         * @param {number[]} nums
+         * @return {number[][]}
+         */
+        var threeSum = function(nums) {
+            let res = new Set()
+            nums.sort()
+            for (let i = 0; i < nums.length; i++) {
+                let a = nums[i]
+                let l = i + 1,
+                    r = nums.length - 1
+                while (l < r) {
+                    let b = nums[l]
+                    let c = nums[r]
+                    if (a + b + c === 0) {
+                        res.add([a, b, c].toString())
+                        l++
+                        r = nums.length - 1
+                    }
+                    if (a + b + c > 0) r--;
+                    if (a + b + c < 0) l++
+                }
+            }
+            // 去重
+            return [...res].map(ele => ele.split(',').map(ele => +ele))
+                // return [...res]
+        };
+
+        /**
+         * @param {number[]} nums
+         * @return {number[][]}
+         */
+        var threeSum2 = function(nums) {
+            let res = new Set()
+            nums.sort()
+            for (let i = 0; i < nums.length; i++) {
+                let a = nums[i]
+                let map = new Map()
+                for (let j = i + 1; j < nums.length; j++) {
+                    let b = nums[j]
+                    if (map.has(reverse(a + b))) {
+                        res.add([a, b, reverse(a + b)].toString())
+                    } else {
+                        map.set(b, j)
+                    }
+                }
+            }
+
+            // 去重
+            return [...res].map(ele => {
+                return ele.split(',').map(n => +n)
+            })
+        };
+
+        function reverse(val) {
+            if (val === 0) return 0
+            else return -val
+        }
+        // [[-1,-1,2],[-1,0,1]]
+        // console.log(threeSum([0, 0, 0, 0]));
+        console.log(threeSum([-1, 0, 1, 2, -1, -4, -2, -3, 3, 0, 4]));
+
+        // [-1, -1, -2, -3, -4, 0, 0, 1, 2, 3, 4]
+
+
+        // [-1,0,1,2,-1,-4,-2,-3,3,0,4]
+        // 输出：
+        // [[-1,-1,2],[-1,0,1],[-1,-2,3],[-2,0,2],[-3,0,3],[-3,1,2],[-4,0,4],[-4,1,3]]
+        // 预期结果：
+        // [[-1,-3,4],]
+    </script>
+</body>
+cript>
+</body>
+
+</html>
+
+</html>cript>
+</body>
+
+</html>
+
+</html>

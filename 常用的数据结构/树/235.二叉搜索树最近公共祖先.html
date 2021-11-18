@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /**
+     * @param {TreeNode} root
+     * @param {TreeNode} p
+     * @param {TreeNode} q
+     * @return {TreeNode}
+     */
+    // 二叉搜索树，左子树的节点值< root && 右子树的节点值>root
+    var lowestCommonAncestor = function(root, p, q) {
+      if(p.val <root.val && q.val < root.val) {
+        return lowestCommonAncestor(root.left, p, q)
+      }
+      if(p.val > root.val && q.val > root.val) {
+        return lowestCommonAncestor(root.right, p, q)
+      }
+      return root
+    };
+  </script>
+</body>
+</html>

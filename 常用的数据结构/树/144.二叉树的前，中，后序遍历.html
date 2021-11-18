@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    
+   -->
+   <script>
+  /**
+   * Definition for a binary tree node.
+   * function TreeNode(val, left, right) {
+   *     this.val = (val===undefined ? 0 : val)
+   *     this.left = (left===undefined ? null : left)
+   *     this.right = (right===undefined ? null : right)
+   * }
+   */
+  /**
+   * @description: 二叉树的前序遍历
+   * @param {TreeNode} root
+   * @return {number[]}
+   */
+  var preorderTraversal = function(root) {
+      if(!root) return []
+      let res = []
+      res = preOrder(root, res);
+      return res
+  };
+
+  function preOrder(node, res) {
+    if(node) {
+      res.push(node.val)
+      preOrder(node.left, res)
+      preOrder(node.right, res)
+    }
+    return res
+  } 
+
+
+
+/**
+ * @description: 二叉树的中序遍历
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var inorderTraversal = function(root) {
+  if(!root) return []
+  let res = []
+  res = midOrder(root, res)
+  return res
+};
+function midOrder(node, res) {
+  if(node) {
+    midOrder(node.left, res)
+    res.push(node.val)
+    midOrder(node.right, res)
+  }
+  return res
+}
+
+/**
+ * @description: 二叉树的后序遍历
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+ var postorderTraversal = function(root) {
+  if(!root) return []
+  let res = []
+  res = postOrder(root, res)
+  return res
+};
+function postOrder(node ,res) {
+  if(node) {
+    postOrder(node.left, res)
+    postOrder(node.right, res)
+    res.push(node.val)
+  }
+  return res
+}
+   </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    
+   -->
+   <script>
+      /**
+      * @param {number[]} nums
+      * @return {number}
+      */
+      var majorityElement = function(nums) {
+        if(nums.length === 1) return nums[0]
+        let n =  nums.length
+        let left = nums.slice(0, Math.floor(n/2))
+        let right = nums.slice(Math.floor(n/2), n)
+        let majorLf = majorityElement(left) 
+        let majorRg = majorityElement(right)
+        let countLf = left.filter(ele => ele===majorLf).length
+        let countRg = right.filter(ele => ele===majorRg).length
+        // 左右两边的数相等时，则返回任意一个；否则判断两边数的count值， 返回count值较大的数；
+        if(majorLf === majorRg) return majorLf
+        return countLf >= countRg ? majorLf : majorRg
+      };
+
+      var majorityElement2 = function(nums) {
+        var map = new Map()
+        for(let i=0; i<nums.length; i++) {
+          map.has(nums[i]) ?  map.set(nums[i], map.get(nums[i]) + 1) : map.set(nums[i], 1);
+        }
+        let maxVal = Math.max(...map.values())
+        return [...map.keys()].find(key => map.get(key) ===  maxVal)
+      };
+
+      console.log(majorityElement([3,3,4]));
+      // console.log(majorityElement([2,2,1,1,1,2,2]));
+
+   </script>
+</body>
+</html>

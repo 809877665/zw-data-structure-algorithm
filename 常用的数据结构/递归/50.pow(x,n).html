@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /**
+      超出时间限制
+    * @param {number} x
+    * @param {number} n
+    * @return {number}
+    */
+    var myPow2 = function(x, n) {
+      if(n === 0) return 1
+      if(n === 1) return x
+      if(n<0) {
+        n = -n
+        x = 1 / x
+      }
+      res = 1
+      while(n > 0) {
+        res *= x
+        n--
+      }
+      return res
+    };
+
+    // 分治法
+    var myPow = function(x, n) {
+      if(n === 0) return 1
+      if(n<0) return 1/myPow(x, -n)
+      // n%2为true,则说明n为奇数， 则n-1为偶数；
+      if(n%2) return x*myPow(x, n-1)
+      // n为偶数时，采用分治算法，转为(x*x)^n/2 次方，  逐次转为n/2的次方；
+      return myPow(x*x, n/2)
+    };
+
+
+  console.log(myPow(2.00000, 10));
+  console.log(myPow(2.00000, -2));
+  console.log(myPow( 2.10000, 3));
+
+  </script>
+</body>
+</html>

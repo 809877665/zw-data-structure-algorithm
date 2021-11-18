@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /**
+     * @param {number} k
+     * @param {number[]} nums
+     */
+    var KthLargest = function (k, nums) {
+      this.k = k
+      this.minHeap = []
+      for (let i = 0; i < nums.length; i++) {
+        this.add(nums[i])
+      }
+    };
+
+    /** 
+         * @param {number} val
+         * @return {number}
+         */
+    KthLargest.prototype.add = function (val) {
+      if (this.minHeap.length < this.k) {
+
+        // 在插入的时候先排序， 找到插入的下标位置
+        let ind = this.getPushIndex(this.minHeap, val)
+        ind > -1 && (this.minHeap.splice(ind, 0, val));
+
+        // this.minHeap.push(val)
+        // // 调整堆中的顺序
+        // this.minHeap = this.sort(this.minHeap)
+      } else {
+        if (val > this.minHeap[this.minHeap.length - 1]) {
+          let ind = this.getPushIndex(this.minHeap, val)
+          ind > -1 && (this.minHeap.splice(ind, 0, val));
+          this.minHeap.pop()
+
+          //  该元素比堆顶中的最小值大，则替换堆顶中的元素
+          // this.minHeap[this.minHeap.length - 1] = val
+          // this.minHeap = this.sort(this.minHeap)
+        }
+        // 该元素比堆中的最小元素还小，则丢弃该元素
+      }
+      return this.minHeap[this.minHeap.length - 1]
+    };
+
+
+
+    /**
+     *  @description: 获取需要插入的下标位置
+     *  @return: 下标值
+     */
+    KthLargest.prototype.getPushIndex = function (array, val) {
+      if (array.length === 0) return 0
+      let i = array.length - 1
+      while (i >= 0) {
+        if (val > array[i]) {
+          // 当前元素比堆中比较的元素大， 则继续向下查找， 
+          i--
+        } else {
+          // 当前元素比堆中比较的元素小，则返回当前堆元素下标的前一个值
+          return i + 1
+        }
+        if (i === -1) {
+          // 已经比较到最末尾了
+          return i + 1
+        }
+      }
+      return i
+    }
+
+    // 调整堆的顺序，将最小值放在最上面--普通排序
+    KthLargest.prototype.sort = function (heap) {
+      if (heap.length <= 2) return heap
+      heap = [].concat(heap.slice(0, 1)).concat(heap.slice(1).sort((a, b) => b - a))
+      return heap;
+    }
+    KthLargest.prototype.quickSort = function (array, start = 0, end = array.length - 1) {
+      if (start < end) {
+        let mid = partion(array, start, end)
+        this.quickSort(array, start, mid - 1)
+        this.quickSort(array, mid + 1, end)
+      }
+      return array
+    }
+
+    function exchange(array, i, j) {
+      let temp = array[i]
+      array[i] = array[j]
+      array[j] = temp;
+      return array
+    }
+
+    // 返回下标
+    function partion(array, start, end) {
+      // 参考元素
+      let point = array[start]
+      while (start < end) {
+        while (start < end && array[end] > point) {
+          end--
+        }
+        if (start < end && array[end] < point) {
+          exchange(array, start, end)
+          start++
+        }
+        while (start < end && array[start] < point) {
+          start++
+        }
+        if (start < end && array[start > point]) {
+          exchange()
+        }
+      }
+    }
+
+
+    // ["KthLargest","add","add","add","add","add"]
+    // [[3,[4,5,8,2]],[3],[5],[10],[9],[4]]
+    // [null,4,5,5,8,8]
+
+    let kthLargest = new KthLargest(3, [4, 5, 8, 2]);
+    // kthLargest.add(3);   // return 4
+    // kthLargest.add(5);   // return 5
+    // kthLargest.add(10);  // return 5
+    // kthLargest.add(9);   // return 8
+    // kthLargest.add(4);   // return 8
+    console.log(kthLargest.add(3));
+    console.log(kthLargest.add(5));
+    console.log(kthLargest.add(10));
+    console.log(kthLargest.add(9));
+    console.log(kthLargest.add(4));
+  </script>
+</body>
+
+</html>
