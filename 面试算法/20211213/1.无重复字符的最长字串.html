@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /**
+     * @param {string} s
+     * @return {number}: 无重复字符的最长字串长度
+     */
+    var lengthOfLongestSubstring = function(s) {
+      if(s.length <=1) return s.length
+      let maxLen=1;
+      let i=1, str=s.charAt(0);
+      while(i < s.length) {
+        let char = s.charAt(i)
+        if(str.includes(char)) {
+          // substr(startIndex, endIndex)截取[startIndex, endIndex]下标处的元素
+          str = str.concat(char).substr(str.indexOf(char)+1)
+        }else {
+          str += char
+          maxLen = Math.max(maxLen, str.length)
+        }
+        i++
+      }
+      return maxLen
+    };
+
+    // console.log(lengthOfLongestSubstring('abcabcbb'));
+    // console.log(lengthOfLongestSubstring('bbbbb'));
+    console.log(lengthOfLongestSubstring("aabaab!bb"));
+  </script>
+</body>
+</html>

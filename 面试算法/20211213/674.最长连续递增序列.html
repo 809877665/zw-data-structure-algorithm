@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var findLengthOfLCIS = function(nums) {
+            if (nums.length === 1) return 1
+            let res = 1
+            let stack = [nums[0]];
+            for (let i = 1; i < nums.length; i++) {
+                if (nums[i] > stack[stack.length - 1]) {
+                    stack.push(nums[i])
+                } else {
+                    res = Math.max(res, stack.length)
+                    stack = [nums[i]]
+                }
+            }
+            // Math.max(res, stack.length): 是防止当前的序列已经是连续递增的数组，即res一直是初始的1，此时应该取栈的大小
+            return Math.max(res, stack.length)
+
+        };
+        console.log(findLengthOfLCIS([2, 1, 3]));
+        // console.log(findLengthOfLCIS([1, 3, 5, 7]));
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+                                                                                                递归法
+                                                                                                * @param {number} n
+                                                                                                * @return {number}
+                                                                                                */
+        // let map = new Map()
+        // var climbStairs = function(n) {
+        //     if (n <= 2) return n
+        //     if (!map.has(n)) {
+        //         map.set(n, climbStairs(n - 1) + climbStairs(n - 2))
+        //     }
+        //     return map.get(n)
+        // };
+
+        /**
+        迭代法
+        * @param {number} n
+        * @return {number}
+        */
+        var climbStairs = function(n) {
+            if (n <= 2) return n
+            let a = 1,
+                b = 2; // 定义初始的两个值, a为n-2的值； b为n-1的值；
+            let sum = n
+            for (let i = 3; i <= n; i++) {
+                sum = a + b
+                a = b;
+                b = sum
+            }
+            return sum
+        };
+
+        console.log(climbStairs(2));
+        console.log(climbStairs(3));
+        console.log(climbStairs(4));
+    </script>
+</body>
+
+</html>

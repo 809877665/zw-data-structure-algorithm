@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 
+        分析：
+            dp[i]:存放地i项的最长递增子序列的长度；返回dp[i]的最大值即为当前序列的最长递增子序列的长度；
+            找出前i项每一项的最长递增子序列的长度dp[0]~dp[i-1]， 
+            根据最大值max = Math.max([dp[0]....dp[i-1]])求出第i项的最长递增子序列的长度；
+            如果当前的nums[i] > nums[j]，则dp[i] = max+1;否则 dp[i] = max;
+     -->
+    <script>
+        // dp[i]: 从下标0处到下标i（包含i）处，最长子序列的长度
+        var lengthOfLIS = function(nums) {
+            if (nums.length === 1) return 1
+            let dp = [1],
+                res = 1
+            for (let i = 1; i < nums.length; i++) {
+                dp[i] = 1
+                for (let j = 0; j < i; j++) {
+                    if (nums[i] > nums[j]) {
+                        dp[i] = Math.max(dp[i], dp[j] + 1)
+                    }
+                }
+                res = Math.max(dp[i], res)
+            }
+            return res
+        };
+
+        console.log(lengthOfLIS([0, 1, 0, 3, 2, 3])); // 4
+    </script>
+</body>
+
+</html>

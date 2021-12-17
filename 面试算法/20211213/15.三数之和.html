@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /**
+     * 超出时间限制： 1， 得到二维数组，再对二维数组去重；
+     * @param {number[]} nums
+     * @return {number[][]}
+     */
+    var threeSum1 = function(nums) {
+      let a,b;
+      let res = []
+      for(let i=0; i<nums.length-1;i++) {
+        a = nums[i]
+        let map = new Map()
+        for(let j=i+1; j<nums.length; j++) {
+          b = nums[j]
+          let key = -a-b
+          if(map.has(key)) {
+            res.push([a, b, key])
+          } else {
+            map.set(nums[j], j)
+          }
+        }
+      }
+      return rmRepeat(res)
+    };
+
+    // 判断两个数字的元素值是否相等
+    function rmRepeat(arr) {
+      for(let index in arr) {
+        arr[index].sort((a, b) => b-a)
+      }
+      let obj = {}
+      let res = []
+      for (const key in arr) {
+        if(!Object.keys(obj).includes(arr[key].join('_'))) {
+          res.push(arr[key])
+          obj[arr[key].join('_')] = true
+        }
+      }
+      return res
+    }
+
+
+    // 2. 直接通过set对重复的字符串进行过滤；
+    var threeSum = function(nums) {
+      let a,b;
+      nums.sort()
+      let res = new Set()
+      for(let i=0; i<nums.length-1;i++) {
+        a = nums[i]
+        let map = new Map()
+        for(let j=i+1; j<nums.length; j++) {
+          b = nums[j]
+          let key = -a-b
+          if(map.has(key)) {
+            res.add([a,b,key].toString())
+          } else {
+            map.set(nums[j], j)
+          }
+        }
+      }
+      return [...res].map(ele => {
+        return ele.split(',').map(ele => Number(ele))
+      })
+    };
+
+
+    console.log(threeSum([-1,0,1,2,-1,-4]));
+    console.log(threeSum([]));
+    console.log(threeSum([0]));
+
+  </script>
+</body>
+</html>
